@@ -6,16 +6,17 @@ import com.alwaysafter.minecraft.paintball.util.ItemBuilder;
 import lombok.RequiredArgsConstructor;
 import net.minecraft.server.v1_8_R3.NBTTagCompound;
 import org.bukkit.Material;
+import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack;
 import org.bukkit.inventory.ItemStack;
 
 @RequiredArgsConstructor
 public final class M4A1SPaintballGunImpl implements PaintballGun {
 
-    private int clipAmmo = 0;
+    private int clipAmmo = 30;
 
     @Override
     public String getGunName() {
-        return "M4A1 (Silent)";
+        return "M4A1";
     }
 
     @Override
@@ -40,7 +41,7 @@ public final class M4A1SPaintballGunImpl implements PaintballGun {
 
     @Override
     public ItemStack getItemStack() {
-        final ItemBuilder itemBuilder = ItemBuilder.of(Material.DIAMOND_HOE)
+        return ItemBuilder.of(Material.DIAMOND_HOE)
                 .displayName(getGunName())
                 .lore(
                         "§7Damage: §f" + getDamage(),
@@ -48,12 +49,9 @@ public final class M4A1SPaintballGunImpl implements PaintballGun {
                         "",
                         "§7This gun is originally from",
                         "§7Counter Terrorist Team."
-                );
-
-        final NBTTagCompound compound = itemBuilder.getCompound();
-        compound.setBoolean(PaintballConstants.GUN_NBT_TAG_KEY, true);
-
-        return itemBuilder.buildWithNbt();
+                )
+                .nbt(PaintballConstants.GUN_NBT_TAG_KEY, getGunName())
+                .build();
     }
 
     @Override

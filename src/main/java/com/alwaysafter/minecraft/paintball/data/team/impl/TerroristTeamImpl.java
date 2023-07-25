@@ -3,6 +3,7 @@ package com.alwaysafter.minecraft.paintball.data.team.impl;
 import com.alwaysafter.minecraft.paintball.data.gun.PaintballGun;
 import com.alwaysafter.minecraft.paintball.data.gun.impl.AK47PaintballGunImpl;
 import com.alwaysafter.minecraft.paintball.data.team.PaintballTeam;
+import com.alwaysafter.minecraft.paintball.data.team.type.PaintballTeamType;
 import com.alwaysafter.minecraft.paintball.data.user.PaintballUser;
 import com.google.common.collect.Lists;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +20,11 @@ public final class TerroristTeamImpl implements PaintballTeam {
     @Override
     public String getTeamName() {
         return "Terrorist";
+    }
+
+    @Override
+    public PaintballTeamType getTeamType() {
+        return PaintballTeamType.TERRORIST;
     }
 
     @Override
@@ -50,4 +56,5 @@ public final class TerroristTeamImpl implements PaintballTeam {
     public void setWonRounds(final int rounds) {
         this.wonRounds = rounds;
     }
+
 }

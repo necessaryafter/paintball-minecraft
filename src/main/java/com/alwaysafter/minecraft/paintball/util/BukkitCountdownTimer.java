@@ -14,7 +14,7 @@ public final class BukkitCountdownTimer extends BukkitRunnable {
 
     @Override
     public void run() {
-        if(--counter < 0) {
+        if(--counter <= 0) {
             this.completionAction.run();
             this.cancel();
 

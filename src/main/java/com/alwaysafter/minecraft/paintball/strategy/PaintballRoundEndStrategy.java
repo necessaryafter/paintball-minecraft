@@ -6,6 +6,9 @@ import com.alwaysafter.minecraft.paintball.data.phase.PaintballRoundPhase;
 import com.alwaysafter.minecraft.paintball.data.team.PaintballTeam;
 import lombok.RequiredArgsConstructor;
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.PlayerInventory;
 
 @RequiredArgsConstructor
 public final class PaintballRoundEndStrategy {
@@ -13,13 +16,17 @@ public final class PaintballRoundEndStrategy {
     private final PaintballGame paintballGame;
 
     public void advanceRound() {
-        if(!this.paintballGame.hasDiedAll()) return;
+        if(!this.paintballGame.hasAnyAlive()) {
+            System.out.println("haha no died");
+            return;
+        }
 
         final PaintballTeam aliveTeam = this.paintballGame.getAliveTeam();
         this.paintballGame.setRound(this.paintballGame.getRound() + 1);
 
         aliveTeam.setWonRounds(aliveTeam.getWonRounds() + 1);
 
+        new PaintballRoundStartStrategy(paintballGame).startRound();
         this.paintballGame.getPaintballTeams().forEach(paintballTeam -> paintballTeam.getPaintballUsers().stream()
                 .map(user -> Bukkit.getPlayerExact(user.getPlayerName()))
                 .forEach(player -> {
@@ -44,7 +51,17 @@ public final class PaintballRoundEndStrategy {
                     });
 
                     this.paintballGame.setRoundPhase(PaintballRoundPhase.COUNTING);
+
+                    for (final Player onlinePlayer : Bukkit.getOnlinePlayers()) {
+                        final PlayerInventory inventory = onlinePlayer.getInventory();
+
+                        inventory.clear();
+                        inventory.setArmorContents(null);
+                    }
+
+                    player.setGameMode(GameMode.SURVIVAL);
                     player.teleport(PaintballConstants.getLocationByTeam(paintballTeam));
+
                 }));
     }
 

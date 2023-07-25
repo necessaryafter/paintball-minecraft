@@ -15,7 +15,7 @@ public final class PaintballUserDieStrategy {
 
     public void handle(PaintballUser user, PaintballUser killer) {
         final PaintballTeam paintballTeam = user.getTeam();
-        paintballTeam.getAliveUsers().removeIf(target -> target.getPlayerName().equals(user.getPlayerName()));
+        paintballTeam.getAliveUsers().remove(user);
 
         this.paintballGame.broadcast(
                 user.getDisplayName() + " §7died by " + killer.getDisplayName() + ". §8(AK-47)",
@@ -26,6 +26,8 @@ public final class PaintballUserDieStrategy {
         if(playerExact == null) return;
 
         playerExact.setGameMode(GameMode.SPECTATOR);
+
+        new PaintballRoundEndStrategy(paintballGame).advanceRound();
     }
 
 }

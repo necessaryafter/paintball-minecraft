@@ -3,7 +3,9 @@ package com.alwaysafter.minecraft.paintball.controller;
 
 import com.alwaysafter.minecraft.paintball.data.PaintballGame;
 import com.alwaysafter.minecraft.paintball.data.phase.PaintballRoundPhase;
+import lombok.Getter;
 
+@Getter
 public final class PaintballController {
 
     private PaintballGame paintballGame = null;
@@ -16,7 +18,7 @@ public final class PaintballController {
     }
 
     public boolean hasGameRunning() {
-        return this.paintballGame.getRoundPhase() != PaintballRoundPhase.WAITING;
+        return this.paintballGame != null;
     }
 
     public boolean hasGameStarted() {

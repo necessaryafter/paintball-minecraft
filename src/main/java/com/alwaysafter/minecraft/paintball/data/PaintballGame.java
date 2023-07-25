@@ -23,33 +23,27 @@ public final class PaintballGame {
             new TerroristTeamImpl()
     );
 
-    private PaintballRoundPhase roundPhase = null;
+    private PaintballRoundPhase roundPhase = PaintballRoundPhase.WAITING;
     private long paintballRoundTime;
-    private int round = 0;
+    private int round = 1;
 
     public int remainingRounds() {
         return this.maximumRounds - this.round;
     }
 
-    public boolean hasDiedAll() {
-        return this.paintballTeams.stream()
-                .noneMatch(paintballTeam -> paintballTeam.getAliveUsers().size() < 5);
+    public boolean hasAnyAlive() {
+        return this.paintballTeams.stream().anyMatch(paintballTeam -> paintballTeam.getAliveUsers().size() >= 1);
     }
 
     public PaintballTeam getAliveTeam() {
         return this.paintballTeams.stream()
-                .filter(paintballTeam -> paintballTeam.getAliveUsers().size() < 5)
+                .filter(paintballTeam -> paintballTeam.getAliveUsers().size() >= 1)
                 .findFirst().orElse(null);
     }
 
-    public void broadcast(String... message) {
-        for (final PaintballTeam paintballTeam : this.paintballTeams) {
-            for (final PaintballUser paintballUser : paintballTeam.getPaintballUsers()) {
-                final Player playerExact = Bukkit.getPlayerExact(paintballUser.getPlayerName());
-                if(playerExact == null) return;
-
-                playerExact.sendMessage(message);
-            }
+    public void broadcast(String... messages) {
+        for (final String message : messages) {
+            Bukkit.broadcastMessage(message);
         }
     }
 

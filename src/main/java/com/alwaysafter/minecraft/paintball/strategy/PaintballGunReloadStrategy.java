@@ -1,5 +1,6 @@
 package com.alwaysafter.minecraft.paintball.strategy;
 
+import com.alwaysafter.minecraft.paintball.PaintballPlugin;
 import com.alwaysafter.minecraft.paintball.data.gun.PaintballGun;
 import com.alwaysafter.minecraft.paintball.data.user.PaintballUser;
 import com.alwaysafter.minecraft.paintball.util.BukkitCountdownTimer;
@@ -14,13 +15,19 @@ public final class PaintballGunReloadStrategy {
         if(playerExact == null) return;
 
         final PaintballGun paintballGun = user.getGun();
+        playerExact.addPotionEffect(PotionEffectType.SLOW.createEffect(paintballGun.getReloadTime(), 6));
+
         final BukkitCountdownTimer countdownTimer = BukkitCountdownTimer.of(
                 paintballGun.getReloadTime(),
-                value -> playerExact.sendTitle("§7Reloading in", "§7" + value + " seconds"),
-                () -> paintballGun.setClipAmmo(paintballGun.getMaximumAmmo())
+                value -> playerExact.sendTitle("§fReloading in", "§7" + value + " seconds§f."),
+                () -> {
+                    playerExact.sendTitle("§aGun reloaded!", "§7Have fun shooting1");
+                    paintballGun.setClipAmmo(paintballGun.getMaximumAmmo());
+                }
         );
 
-        playerExact.addPotionEffect(PotionEffectType.SLOW.createEffect(paintballGun.getReloadTime(), 6));
+        playerExact.removePotionEffect(PotionEffectType.SLOW);
+        countdownTimer.runTaskTimerAsynchronously(PaintballPlugin.getInstance(), 20, 20);
     }
 
 }

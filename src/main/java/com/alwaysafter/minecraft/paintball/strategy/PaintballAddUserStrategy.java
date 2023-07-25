@@ -34,6 +34,10 @@ public final class PaintballAddUserStrategy {
                 .putPaintballUser(paintballUser);
 
         paintballTeam.getPaintballUsers().add(paintballUser);
+
+        PaintballPlugin.getInstance()
+                .getPaintballScoreboard()
+                .handle(player, paintballUser);
     }
 
 }

@@ -4,6 +4,7 @@ import com.alwaysafter.minecraft.paintball.data.user.PaintballUser;
 import com.google.common.collect.Maps;
 import lombok.NonNull;
 
+import java.util.Collection;
 import java.util.Map;
 
 public final class PaintballUserCache {
@@ -20,6 +21,14 @@ public final class PaintballUserCache {
 
     public void removePaintballUser(@NonNull PaintballUser user) {
         this.paintballUserMap.remove(user.getPlayerName());
+    }
+
+    public Collection<PaintballUser> values() {
+        return paintballUserMap.values();
+    }
+
+    public boolean exists(String name) {
+        return this.paintballUserMap.containsKey(name);
     }
 
 }

@@ -26,6 +26,9 @@ dependencies {
     compileOnly("org.spigotmc:spigot:1.8.8-R0.1-SNAPSHOT")
     compileOnly(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
 
+    implementation("fr.mrmicky:fastboard:2.0.0")
+    implementation("co.aikar:acf-paper:0.5.1-SNAPSHOT")
+
     val lombok = "org.projectlombok:lombok:1.18.24"
     compileOnly(lombok)
     annotationProcessor(lombok)
