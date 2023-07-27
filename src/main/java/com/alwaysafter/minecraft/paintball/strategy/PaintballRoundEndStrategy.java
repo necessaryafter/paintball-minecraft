@@ -1,6 +1,7 @@
 package com.alwaysafter.minecraft.paintball.strategy;
 
 import com.alwaysafter.minecraft.paintball.PaintballConstants;
+import com.alwaysafter.minecraft.paintball.PaintballPlugin;
 import com.alwaysafter.minecraft.paintball.data.PaintballGame;
 import com.alwaysafter.minecraft.paintball.data.phase.PaintballRoundPhase;
 import com.alwaysafter.minecraft.paintball.data.team.PaintballTeam;
@@ -17,7 +18,6 @@ public final class PaintballRoundEndStrategy {
 
     public void advanceRound() {
         if(!this.paintballGame.hasAnyAlive()) {
-            System.out.println("haha no died");
             return;
         }
 
@@ -25,6 +25,13 @@ public final class PaintballRoundEndStrategy {
         this.paintballGame.setRound(this.paintballGame.getRound() + 1);
 
         aliveTeam.setWonRounds(aliveTeam.getWonRounds() + 1);
+
+        if(aliveTeam.getWonRounds() >= 8 || paintballGame.getRound() >= PaintballConstants.MAXIMUM_PAINTBALL_ROUNDS) {
+            new PaintballGameEndStrategy(PaintballPlugin.getInstance().getPaintballController(), aliveTeam)
+                    .handleGameEnd();
+            return;
+        }
+
 
         new PaintballRoundStartStrategy(paintballGame).startRound();
         this.paintballGame.getPaintballTeams().forEach(paintballTeam -> paintballTeam.getPaintballUsers().stream()

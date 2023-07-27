@@ -1,12 +1,15 @@
 package com.alwaysafter.minecraft.paintball.data;
 
+import com.alwaysafter.minecraft.paintball.PaintballConstants;
 import com.alwaysafter.minecraft.paintball.data.phase.PaintballRoundPhase;
 import com.alwaysafter.minecraft.paintball.data.team.PaintballTeam;
 import com.alwaysafter.minecraft.paintball.data.team.impl.CounterTerroristTeamImpl;
 import com.alwaysafter.minecraft.paintball.data.team.impl.TerroristTeamImpl;
+import com.alwaysafter.minecraft.paintball.data.team.type.PaintballTeamType;
 import com.alwaysafter.minecraft.paintball.data.user.PaintballUser;
 import com.google.common.collect.ImmutableList;
 import lombok.Data;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -17,7 +20,6 @@ import java.util.List;
 @Data
 public final class PaintballGame {
 
-    private final int maximumRounds = 15;
     private final List<PaintballTeam> paintballTeams = ImmutableList.of(
             new CounterTerroristTeamImpl(),
             new TerroristTeamImpl()
@@ -28,7 +30,7 @@ public final class PaintballGame {
     private int round = 1;
 
     public int remainingRounds() {
-        return this.maximumRounds - this.round;
+        return PaintballConstants.MAXIMUM_PAINTBALL_ROUNDS - this.round;
     }
 
     public boolean hasAnyAlive() {
@@ -38,6 +40,12 @@ public final class PaintballGame {
     public PaintballTeam getAliveTeam() {
         return this.paintballTeams.stream()
                 .filter(paintballTeam -> paintballTeam.getAliveUsers().size() >= 1)
+                .findFirst().orElse(null);
+    }
+
+    public PaintballTeam getPaintballTeam(@NonNull PaintballTeamType paintballTeamType) {
+        return this.paintballTeams.stream()
+                .filter(paintballTeam -> paintballTeam.getTeamType() == paintballTeamType)
                 .findFirst().orElse(null);
     }
 

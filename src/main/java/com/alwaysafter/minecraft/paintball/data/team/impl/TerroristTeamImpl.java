@@ -23,6 +23,11 @@ public final class TerroristTeamImpl implements PaintballTeam {
     }
 
     @Override
+    public String getShortName() {
+        return "TR";
+    }
+
+    @Override
     public PaintballTeamType getTeamType() {
         return PaintballTeamType.TERRORIST;
     }

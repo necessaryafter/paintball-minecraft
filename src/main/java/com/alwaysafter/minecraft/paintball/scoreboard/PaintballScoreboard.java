@@ -42,7 +42,7 @@ public final class PaintballScoreboard {
 
         fastBoard.updateTitle("§9§lPAINTBALL!");
         fastBoard.updateLines(
-                " §8 Round " + paintballGame.getRound() + "/8",
+                " §8 Round " + paintballGame.getRound(),
                 "",
                 "§f Your team",
                 "§7 " + user.getTeam().getTeamName(),

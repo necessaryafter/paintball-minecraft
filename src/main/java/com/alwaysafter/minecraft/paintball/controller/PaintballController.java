@@ -17,6 +17,12 @@ public final class PaintballController {
         this.paintballGame.setRoundPhase(PaintballRoundPhase.WAITING);
     }
 
+    public void endGame() {
+        if(this.paintballGame == null) return;
+
+        this.paintballGame = null;
+    }
+
     public boolean hasGameRunning() {
         return this.paintballGame != null;
     }

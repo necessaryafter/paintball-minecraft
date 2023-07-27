@@ -13,6 +13,7 @@ public final class PaintballConstants {
     public static final String GUN_NBT_TAG_KEY = "paintball-gun";
     public static final String GUN_PROJECTILE_METADATA_KEY = "paintball-projectile";
 
+    public static final int MAXIMUM_PAINTBALL_ROUNDS = 15;
     public static final int MAXIMUM_MEMBERS_PER_TEAM = 5;
     public static final int MINIMUM_MEMBERS_TO_START = 2;
 

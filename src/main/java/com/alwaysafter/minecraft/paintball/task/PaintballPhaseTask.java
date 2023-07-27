@@ -18,26 +18,24 @@ public final class PaintballPhaseTask extends BukkitRunnable {
         final PaintballController paintballController = paintballPlugin.getPaintballController();
 
         if(!paintballController.hasGameRunning()) {
-            System.out.println("parou aq fdp");
             this.cancel();
             return;
 
         }
         final PaintballGame paintballGame = paintballController.getPaintballGame();
-        System.out.println("AI XERECA");
 
-        /*final int totalPlayers = paintballGame.getPaintballTeams().stream()
+        final int totalPlayers = paintballGame.getPaintballTeams().stream()
                 .mapToInt(paintballTeam -> paintballTeam.getAliveUsers().size())
                 .sum();
 
         if(totalPlayers < PaintballConstants.MINIMUM_MEMBERS_TO_START) {
             return;
-        }*
-         */
+        }
+
 
         BukkitCountdownTimer.of(
                 10,
-                value -> Bukkit.broadcastMessage("§c ahjdiawjdoiawdj inciiando em " + value),
+                value -> Bukkit.broadcastMessage("§6Match starting in " + value + " seconds."),
                 () -> {
                     paintballGame.getPaintballTeams().forEach(paintballTeam -> paintballTeam.getPaintballUsers().stream()
                             .map(user -> Bukkit.getPlayerExact(user.getPlayerName()))

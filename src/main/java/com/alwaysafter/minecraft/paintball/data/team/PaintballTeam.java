@@ -12,6 +12,8 @@ public interface PaintballTeam {
 
     String getTeamName();
 
+    String getShortName();
+
     PaintballTeamType getTeamType();
 
     ChatColor getTeamColor();
